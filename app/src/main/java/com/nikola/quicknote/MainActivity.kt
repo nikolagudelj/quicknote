@@ -3,9 +3,16 @@ package com.nikola.quicknote
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
+import com.nikola.quicknote.database.Database
 import com.nikola.quicknote.database.NoteDatabase
 import com.nikola.quicknote.model.Note
+import com.nikola.quicknote.viewmodel.MainActivityViewModel
+import com.nikola.quicknote.viewmodel.MainViewModelFactory
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -14,27 +21,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val database = Room.databaseBuilder(
-            this,
-            NoteDatabase::class.java,
-            "note-database"
-        ).build()
-
-        Log.i("Nikola", "Creating database...\n")
-        val noteDao = database.noteDao()
-
-        GlobalScope.launch {
-            //noteDao.create(Note(2, "Wassup"))
-            //noteDao.create((Note(3, "Yoooo")))
-
-            print("Number of notes: " + noteDao.getNumberOfNotes())
-            noteDao.create((Note(3, "Am I added yet")))
-
-            val notes = noteDao.getAll();
-            for (note in notes) {
-                print(note.text)
+        val factory = MainViewModelFactory(application)
+        val viewModel = ViewModelProvider(this, factory).get(MainActivityViewModel::class.java)
+        viewModel.getNotes().observe(this, Observer {
+            for (note in it) {
+                print("${note.uid} ${note.text}")
+                print("\n")
             }
-        }
+        })
+        screen.setOnClickListener(View.OnClickListener {
+            viewModel.createNote("Hello there")
+        })
     }
 
     private fun print(text : String) {

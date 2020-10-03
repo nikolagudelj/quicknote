@@ -6,17 +6,24 @@ import com.nikola.quicknote.model.Note
 @Dao
 interface NoteDao {
     @Query("select * from note")
-    fun getAll() : List<Note>
+    suspend fun getAll() : List<Note>
 
     @Query("select count(*) from note")
-    fun getNumberOfNotes() : Int
+    suspend fun count() : Int
 
     @Delete
-    fun delete(note : Note)
+    suspend fun delete(note : Note)
 
     @Update
-    fun update(note : Note)
+    suspend fun update(note : Note)
 
     @Insert
-    fun create(note : Note)
+    suspend fun insert(note : Note)
+
+    /** Generates a new uid for the note, and adds it to the database */
+    suspend fun create(text : String) : Note {
+        val note = Note(this.count() + 1, text)
+        insert(note)
+        return note
+    }
 }
