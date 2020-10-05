@@ -20,7 +20,7 @@ class MainFragment : BaseFragment() {
 
         val recyclerView = notes_list
         recyclerView.layoutManager = LinearLayoutManager(context)
-        val adapter = NoteListAdapter(viewModel.getNotes().value!!)
+        val adapter = NoteListAdapter(viewModel.getNotes().value!!, viewModel)
         recyclerView.adapter = adapter
 
         // Observe changes to the note list

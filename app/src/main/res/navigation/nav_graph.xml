@@ -16,9 +16,19 @@
             app:popUpTo="@id/mainFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
+        <action
+            android:id="@+id/action_mainFragment_to_editNoteFragment"
+            app:destination="@id/editNoteFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popUpTo="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/createNoteFragment"
         android:name="com.nikola.quicknote.fragments.CreateNoteFragment"
         android:label="CreateNoteFragment" />
+    <fragment
+        android:id="@+id/editNoteFragment"
+        android:name="com.nikola.quicknote.fragments.EditNoteFragment"
+        android:label="EditNoteFragment" />
 </navigation>

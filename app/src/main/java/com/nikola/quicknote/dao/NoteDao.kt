@@ -21,8 +21,8 @@ interface NoteDao {
     suspend fun insert(note : Note)
 
     /** Generates a new uid for the note, and adds it to the database */
-    suspend fun create(text : String, title : String) : Note {
-        val note = Note(this.count() + 1, text, title)
+    suspend fun create(note : Note) : Note {
+        note.uid = this.count() + 1
         insert(note)
         return note
     }

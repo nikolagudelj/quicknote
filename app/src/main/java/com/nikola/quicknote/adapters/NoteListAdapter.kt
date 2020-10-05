@@ -1,14 +1,17 @@
 package com.nikola.quicknote.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.nikola.quicknote.R
 import com.nikola.quicknote.model.Note
+import com.nikola.quicknote.viewmodel.MainActivityViewModel
 
-class NoteListAdapter(private var notes : List<Note>) : RecyclerView.Adapter<NoteListAdapter.ViewHolder>() {
+class NoteListAdapter(private var notes : List<Note>, private val viewModel : MainActivityViewModel) : RecyclerView.Adapter<NoteListAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.findViewById(R.id.title)
@@ -17,7 +20,15 @@ class NoteListAdapter(private var notes : List<Note>) : RecyclerView.Adapter<Not
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val note = LayoutInflater.from(parent.context).inflate(R.layout.note_template, parent, false)
-        return ViewHolder(note)
+        val viewHolder = ViewHolder(note)
+
+        note.setOnClickListener {
+            viewModel.currentNote = notes[viewHolder.adapterPosition]
+            Log.i("Nikola", "${viewModel.currentNote.title} : ${viewModel.currentNote.text}")
+            note.findNavController().navigate(R.id.action_mainFragment_to_editNoteFragment)
+        }
+
+        return viewHolder
     }
 
     override fun getItemCount(): Int {
