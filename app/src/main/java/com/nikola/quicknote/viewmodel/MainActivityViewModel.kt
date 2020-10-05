@@ -17,6 +17,7 @@ class MainActivityViewModel(appContext : Application) : AndroidViewModel(appCont
 
     init {
         viewModelScope.launch {
+            mutableLiveData.value = mutableListOf()
             database = Database.getDatabase(getApplication())
             mutableLiveData.value = database.noteDao().getAll() as MutableList<Note>
             notes = mutableLiveData.value!!     // TODO Might cause a crash
@@ -27,11 +28,11 @@ class MainActivityViewModel(appContext : Application) : AndroidViewModel(appCont
         return mutableLiveData
     }
 
-    fun createNote(text : String) {
+    fun createNote(text : String, title : String) {
         viewModelScope.launch {
-            val createdNote = database.noteDao().create(text)
+            val createdNote = database.noteDao().create(text, title)
             notes.add(createdNote)
-            mutableLiveData.postValue(notes)
+            mutableLiveData.value = notes
         }
     }
 }
