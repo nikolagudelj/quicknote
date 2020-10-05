@@ -22,21 +22,20 @@ open class CreateNoteFragment : BaseFragment() {
 
         displayNote(viewModel.currentNote)
         back_button.setOnClickListener {
-            findNavController().popBackStack()
+            goBack()
         }
         save_button.setOnClickListener {
             callSaveButtonAction()
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            viewModel.clearCurrentNote()
-            findNavController().popBackStack()
+            goBack()
         }
     }
 
     private fun callSaveButtonAction() {
         updateCurrentNote()
         callCrudOperation()
-        findNavController().popBackStack()
+        goBack()
     }
 
     protected open fun callCrudOperation() {
@@ -53,5 +52,10 @@ open class CreateNoteFragment : BaseFragment() {
         viewModel.currentNote.text = text.text.toString()
 
         return viewModel.currentNote
+    }
+
+    private fun goBack() {
+        viewModel.clearCurrentNote()
+        findNavController().popBackStack()
     }
 }

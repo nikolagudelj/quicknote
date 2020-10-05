@@ -42,7 +42,6 @@ class MainActivityViewModel(appContext : Application) : AndroidViewModel(appCont
     fun updateNote() {
         viewModelScope.launch {
             database.noteDao().update(currentNote)
-            mutableLiveData.value = notes
         }
     }
 
