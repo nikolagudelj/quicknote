@@ -1,20 +1,17 @@
 package com.nikola.quicknote.fragments
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.activity.addCallback
 import androidx.navigation.fragment.findNavController
 import com.nikola.quicknote.R
 import com.nikola.quicknote.model.Note
-import kotlinx.android.synthetic.main.fragment_create_note.*
-import kotlinx.android.synthetic.main.fragment_create_note.back_button
-import kotlinx.android.synthetic.main.fragment_create_note.save_button
-import kotlinx.android.synthetic.main.fragment_create_note.text
-import kotlinx.android.synthetic.main.fragment_create_note.title
-import kotlinx.android.synthetic.main.fragment_edit_note.*
+import kotlinx.android.synthetic.main.fragment_note_editor.*
 
 open class CreateNoteFragment : BaseFragment() {
     override var layoutId: Int
-        get() = R.layout.fragment_create_note
+        get() = R.layout.fragment_note_editor
         set(value) {}
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -27,9 +24,31 @@ open class CreateNoteFragment : BaseFragment() {
         save_button.setOnClickListener {
             callSaveButtonAction()
         }
+        // Override default back action, so the app doesn't close
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             goBack()
         }
+
+        // Auto bulleting for note text
+        text.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (switch_button.isChecked  && s != null
+                        &&  s.length > 1
+                        &&  s[start + count - 1] == ' '  &&  s[start + count - 2] == ' ')
+                {
+                    text.removeTextChangedListener(this)
+                    val string = s.toString()
+                    val changedString = string.replace("  ", "\n\u2022 ", true)
+                    text.setText(changedString)
+                    text.addTextChangedListener(this)
+                    text.setSelection(start + count + 1)
+                }
+            }
+            override fun afterTextChanged(s: Editable?) {
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+        })
     }
 
     private fun callSaveButtonAction() {

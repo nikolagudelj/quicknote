@@ -1,6 +1,5 @@
 package com.nikola.quicknote.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +23,6 @@ class NoteListAdapter(private var notes : List<Note>, private val viewModel : Ma
 
         note.setOnClickListener {
             viewModel.currentNote = notes[viewHolder.adapterPosition]
-            Log.i("Nikola", "${viewModel.currentNote.title} : ${viewModel.currentNote.text}")
             note.findNavController().navigate(R.id.action_mainFragment_to_editNoteFragment)
         }
 

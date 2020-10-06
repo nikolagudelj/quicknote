@@ -3,21 +3,14 @@ package com.nikola.quicknote.database
 import android.content.Context
 import androidx.room.Room
 
-class Database {
-    companion object {
-        private var database : NoteDatabase? = null
+object Database {
+    fun getDatabase(context: Context) : NoteDatabase {
+            return createDatabase(context)
+    }
 
-        fun getDatabase(context: Context) : NoteDatabase {
-            if (database == null) {
-                database = createDatabase(context)
-            }
-            return database!!
-        }
-
-        private fun createDatabase(context: Context) : NoteDatabase {
-                return Room.databaseBuilder(context, NoteDatabase::class.java, "note-database")
-                        .fallbackToDestructiveMigration()
-                        .build()
-        }
+    private fun createDatabase(context: Context) : NoteDatabase {
+            return Room.databaseBuilder(context, NoteDatabase::class.java, "note-database")
+                    .fallbackToDestructiveMigration()
+                    .build()
     }
 }

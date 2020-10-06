@@ -23,6 +23,8 @@ interface NoteDao {
     /** Generates a new uid for the note, and adds it to the database */
     suspend fun create(note : Note) : Note {
         note.uid = this.count() + 1
+        if (note.title.isEmpty())
+            note.title = "[no title]"
         insert(note)
         return note
     }

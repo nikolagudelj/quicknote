@@ -25,8 +25,9 @@ abstract class BaseFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         // Instantiate ViewModel with custom parameter
-        val factory = MainViewModelFactory(requireActivity().application)
-        viewModel = ViewModelProvider(requireActivity(), factory)
-            .get(MainActivityViewModel::class.java)
+        viewModel = ViewModelProvider(
+                        requireActivity(),
+                        MainViewModelFactory(requireActivity().application))
+                    .get(MainActivityViewModel::class.java)
     }
 }
