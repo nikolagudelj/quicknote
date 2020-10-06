@@ -1,6 +1,6 @@
 package com.nikola.quicknote.fragments
 
-class EditNoteFragment : CreateNoteFragment() {
+class EditNoteFragment : NoteEditorFragment() {
     override fun callCrudOperation() {
         viewModel.updateNote()
     }

@@ -73,7 +73,7 @@
                         app:thumbTint="@color/colorAccent"
                         app:trackTint="#B3B3B3"
                         app:trackTintMode="src_in"
-                        android:checked="true"/>
+                        android:checked="false"/>
 
                     <TextView
                         android:layout_width="wrap_content"
