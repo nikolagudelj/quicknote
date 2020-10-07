@@ -9,7 +9,11 @@
 * RecyclerView 
 
 ### Screenshots
-* Notes overview <br>
-![Notes overview](https://i.imgur.com/Q228ELd.png)
-* Edit note
-![Edit note](https://i.imgur.com/hMl5ABs.png)
+* Notes overview <br><br>
+<img src="https://i.imgur.com/Q228ELd.png" style="height:500px">
+
+* Edit note <br><br>
+<img src="https://i.imgur.com/yQfJzs2.png" style="height:500px">
+
+* Edit note with auto-bulleting (use double space to create new line with a bullet point) <br><br>
+<img src="https://i.imgur.com/ZzJdjs5.png" style="height:500px">
